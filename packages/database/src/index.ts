@@ -18,7 +18,7 @@ export * from '@prisma/client';
 
 // Export types and utilities
 export type { User, Post, Category, Tag, Product, Order, OrderItem, Promotion, Testimony } from '@prisma/client';
-export type { Role, OrderStatus, PaymentStatus } from '@prisma/client';
+export type { OrderStatus, PaymentStatus } from '@prisma/client';
 
 // Export helper functions for common database operations
 export * from './helpers';

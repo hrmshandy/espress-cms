@@ -11,42 +11,95 @@ datasource db {
 }
 
 // User model
+
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  password      String
-  image         String?
-  role          Role      @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  posts         Post[]
-  orders        Order[]
-  testimonies   Testimony[]
+  id              String      @id
+  name            String
+  email           String
+  emailVerified   Boolean
+  image           String?
+  createdAt       DateTime
+  updatedAt       DateTime
+  role            String?
+  banned          Boolean?
+  banReason       String?
+  banExpires      DateTime?
+  username        String?
+  displayUsername String?
+  sessions        Session[]
+  accounts        Account[]
+  Post            Post[]
+  Order           Order[]
+  Testimony       Testimony[]
+
+  @@unique([email])
+  @@unique([username])
+  @@map("users")
 }
 
-enum Role {
-  USER
-  ADMIN
-  SUPER_ADMIN
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String
+  createdAt      DateTime
+  updatedAt      DateTime
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
+
+  @@unique([token])
+  @@map("sessions")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("accounts")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verifications")
 }
 
 // Post/Blog models
 model Post {
-  id          String      @id @default(cuid())
-  title       String
-  slug        String      @unique
-  content     String
-  excerpt     String?
-  published   Boolean     @default(false)
+  id            String     @id @default(cuid())
+  title         String
+  slug          String     @unique
+  content       String
+  excerpt       String?
+  published     Boolean    @default(false)
   featuredImage String?
-  authorId    String
-  author      User        @relation(fields: [authorId], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  categories  Category[]  @relation("PostToCategory")
-  tags        Tag[]       @relation("PostToTag")
+  authorId      String
+  author        User       @relation(fields: [authorId], references: [id])
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  categories    Category[] @relation("PostToCategory")
+  tags          Tag[]      @relation("PostToTag")
+
+  @@map("posts")
 }
 
 model Category {
@@ -56,13 +109,17 @@ model Category {
   description String?
   posts       Post[]    @relation("PostToCategory")
   products    Product[] @relation("ProductToCategory")
+
+  @@map("categories")
 }
 
 model Tag {
-  id          String    @id @default(cuid())
-  name        String    @unique
-  slug        String    @unique
-  posts       Post[]    @relation("PostToTag")
+  id    String @id @default(cuid())
+  name  String @unique
+  slug  String @unique
+  posts Post[] @relation("PostToTag")
+
+  @@map("tags")
 }
 
 // E-commerce models
@@ -80,20 +137,24 @@ model Product {
   updatedAt   DateTime    @updatedAt
   categories  Category[]  @relation("ProductToCategory")
   orderItems  OrderItem[]
+
+  @@map("products")
 }
 
 model Order {
-  id              String      @id @default(cuid())
+  id              String        @id @default(cuid())
   userId          String
-  user            User        @relation(fields: [userId], references: [id])
-  status          OrderStatus @default(PENDING)
+  user            User          @relation(fields: [userId], references: [id])
+  status          OrderStatus   @default(PENDING)
   total           Decimal
   paymentMethod   String?
   paymentStatus   PaymentStatus @default(UNPAID)
   shippingAddress String?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
   items           OrderItem[]
+
+  @@map("orders")
 }
 
 model OrderItem {
@@ -104,6 +165,8 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   quantity  Int
   price     Decimal
+
+  @@map("order_items")
 }
 
 enum OrderStatus {
@@ -121,25 +184,29 @@ enum PaymentStatus {
 }
 
 model Promotion {
-  id          String    @id @default(cuid())
-  name        String
-  code        String    @unique
-  discount    Decimal
-  isPercent   Boolean   @default(true)
-  startDate   DateTime
-  endDate     DateTime
-  active      Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique
+  discount  Decimal
+  isPercent Boolean  @default(true)
+  startDate DateTime
+  endDate   DateTime
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("promotions")
 }
 
 model Testimony {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   content   String
   rating    Int
-  approved  Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("testimonies")
 }

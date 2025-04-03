@@ -1,0 +1,35 @@
+{
+  "name": "@espress/auth",
+  "version": "0.1.0",
+  "description": "Authentication package for Espress CMS using better-auth",
+  "main": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    },
+    "./client": {
+      "import": "./dist/client.mjs",
+      "types": "./dist/client.d.mts"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/**/*.ts",
+    "clean": "rm -rf dist",
+    "db:migrate": "better-auth-cli migrate"
+  },
+  "dependencies": {
+    "better-auth": "^1.0.0",
+    "@espress/database": "workspace:*"
+  },
+  "devDependencies": {
+    "@better-auth/cli": "^1.0.0",
+    "typescript": "^5.0.0",
+    "tsup": "^8.0.0",
+    "eslint": "^9.0.0",
+    "@types/node": "^20.0.0"
+  }
+}

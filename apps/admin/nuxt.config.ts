@@ -3,6 +3,18 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
 
+  nitro: {
+    experimental: {
+      tasks: true
+    }
+  },
+
+  routeRules: {
+    '/': { redirect: '/dashboard' },
+},
+
+  extends: ['@espress/ui/nuxt'],
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
@@ -10,27 +22,9 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/scripts',
     '@nuxt/test-utils',
-    'shadcn-nuxt'
   ],
 
-  css: [
-    './assets/css/main.css'
-  ],
-
-  vite: {
-  },
-
-  shadcn: {
-    /**
-     * Prefix for all the imported component
-     */
-    prefix: '',
-    /**
-     * Directory that the component lives in.
-     * @default "~/components/uihttps://tailwindcss.com/docs/installation/using-vite"
-     */
-    componentDir: './components/ui'
-  },
+  css: ['./assets/css/main.css'],
 
   typescript: {
     strict: true,

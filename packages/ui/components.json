@@ -1,0 +1,21 @@
+{
+    "$schema": "https://shadcn-vue.com/schema.json",
+    "style": "new-york",
+    "typescript": true,
+    "tailwind": {
+      "config": "tailwind.config.js",
+      "css": "src/styles/main.css",
+      "baseColor": "neutral",
+      "cssVariables": true,
+      "prefix": ""
+    },
+    "aliases": {
+        "components": "@espress/ui/vue/components",
+        "composables": "@espress/ui/vue/composables",
+        "utils": "@espress/ui/lib",
+        "hooks": "@espress/ui/hooks",
+        "lib": "@espress/ui/lib",
+        "ui": "@espress/ui/vue/components"
+    },
+    "iconLibrary": "lucide"
+}
