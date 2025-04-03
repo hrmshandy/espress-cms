@@ -3,8 +3,10 @@
   "compilerOptions": {
     "outDir": "dist",
     "moduleResolution": "NodeNext",
-    "jsx": "preserve"
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "prisma"],
   "exclude": ["node_modules", "dist"]
 }

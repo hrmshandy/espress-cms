@@ -1,84 +1,158 @@
-# Turborepo starter
+# Espress CMS
 
-This Turborepo starter is maintained by the Turborepo core team.
+A modern, full-featured CMS that brews content as smoothly as your morning espresso. Built with Turborepo, featuring a lightning-fast Astro website and a rich, robust Nuxt 3 admin panel.
 
-## Using this example
+## Features
 
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+- **Monorepo Structure**: Managed with Turborepo and pnpm workspaces
+- **Frontend**: Astro-powered public website with blog and e-commerce features
+- **Admin Panel**: Nuxt 3 admin interface with Vue 3 and shadcn-vue components
+- **Database**: Prisma ORM with PostgreSQL
+- **Styling**: TailwindCSS 4 for consistent design across all applications
+- **Authentication**: Secure user management with better-auth
+- **Testing**: Vitest for unit and integration testing
+- **Containerization**: Docker support for easy deployment
 
 ## What's inside?
 
 This Turborepo includes the following packages/apps:
 
-### Apps and Packages
+### Apps
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- `web`: An [Astro](https://astro.build) app for the public-facing website
+- `admin`: A [Nuxt 3](https://nuxt.com) app for the admin panel
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Packages
 
-### Utilities
+- `@espress/ui`: Shared UI components for both Astro and Vue applications
+- `@espress/database`: Prisma client and database utilities
+- `@espress/eslint-config`: ESLint configurations with antfu config
+- `@espress/typescript-config`: TypeScript configurations for different frameworks
 
-This Turborepo has some additional tools already setup for you:
+## Getting Started
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Prerequisites
+
+- Node.js 18 or later
+- pnpm 9.0.0 or later
+- Docker and Docker Compose (for PostgreSQL)
+
+### Installation
+
+1. Clone the repository
+
+```sh
+git clone https://github.com/yourusername/espress-cms.git
+cd espress-cms
+```
+
+2. Install dependencies
+
+```sh
+pnpm install
+```
+
+3. Start the PostgreSQL database
+
+```sh
+docker-compose up -d
+```
+
+4. Set up the environment variables
+
+```sh
+cp packages/database/.env.example packages/database/.env
+# Edit the .env file if needed
+```
+
+5. Generate Prisma client and push the schema to the database
+
+```sh
+pnpm db:generate
+pnpm db:push
+```
+
+### Development
+
+To develop all apps and packages, run the following command:
+
+```sh
+pnpm dev
+```
+
+This will start the development servers for both the Astro frontend and Nuxt admin panel:
+
+- Astro frontend: [http://localhost:4321](http://localhost:4321)
+- Nuxt admin panel: [http://localhost:3000](http://localhost:3000)
 
 ### Build
 
 To build all apps and packages, run the following command:
 
-```
-cd my-turborepo
+```sh
 pnpm build
 ```
 
-### Develop
+## Main Features
 
-To develop all apps and packages, run the following command:
+### Content Management
+
+- **Blog Posts**: Create, edit, and publish blog posts with categories and tags
+- **Media Library**: Upload and manage images and other media files
+
+### E-commerce
+
+- **Products**: Manage products with categories, inventory, and pricing
+- **Orders**: Process and track customer orders
+- **Customers**: Manage customer information and purchase history
+- **Promotions**: Create and manage promotional campaigns and discounts
+
+### User Management
+
+- **Authentication**: Secure login and registration
+- **Role-based Access Control**: Admin, editor, and customer roles
+
+## Docker Deployment
+
+The project includes Dockerfiles for both the Astro frontend and Nuxt admin panel. To build and run the Docker containers:
+
+```sh
+# Build the Docker images
+docker build -t turborepo-cms-web -f apps/web/Dockerfile .
+docker build -t turborepo-cms-admin -f apps/admin/Dockerfile .
+
+# Run the containers
+docker run -p 4321:4321 turborepo-cms-web
+docker run -p 3000:3000 turborepo-cms-admin
+```
+
+## Project Structure
 
 ```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+├── apps
+│   ├── admin             # Nuxt 3 admin panel
+│   │   ├── components    # Vue components
+│   │   ├── pages         # Admin pages
+│   │   └── public        # Static assets
+│   └── web               # Astro frontend
+│       ├── public        # Static assets
+│       └── src           # Source code
+│           ├── components # Astro components
+│           ├── layouts    # Page layouts
+│           └── pages      # Website pages
+├── packages
+│   ├── database          # Prisma schema and database utilities
+│   ├── eslint-config     # Shared ESLint configurations
+│   ├── typescript-config # Shared TypeScript configurations
+│   └── ui                # Shared UI components
+└── docker-compose.yml    # Docker Compose configuration
 ```
 
 ## Useful Links
 
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- [Turborepo Documentation](https://turbo.build/repo/docs)
+- [Astro Documentation](https://docs.astro.build)
+- [Nuxt 3 Documentation](https://nuxt.com/docs)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [TailwindCSS Documentation](https://tailwindcss.com/docs)
+- [shadcn-vue Documentation](https://www.shadcn-vue.com/docs)

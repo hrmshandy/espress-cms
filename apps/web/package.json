@@ -1,28 +1,28 @@
 {
-  "name": "web",
-  "version": "0.1.0",
+  "name": "@espress/web",
   "type": "module",
-  "private": true,
+  "version": "0.0.1",
   "scripts": {
-    "dev": "next dev --turbopack --port 3000",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint . --ext .js,.ts,.astro",
+    "check-types": "astro check"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
-    "next": "^15.2.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@espress/database": "workspace:*",
+    "@espress/ui": "workspace:*",
+    "astro": "^5.5.6"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.13.10",
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4",
-    "eslint": "^9.23.0",
-    "typescript": "5.8.2"
+    "@typescript-eslint/eslint-plugin": "^7.3.1",
+    "@typescript-eslint/parser": "^7.3.1",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^9.0.0",
+    "eslint-plugin-astro": "^0.31.4",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.3.3"
   }
 }

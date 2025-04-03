@@ -1,7 +1,6 @@
-import js from "@eslint/js";
+import antfu from "@antfu/eslint-config";
 import eslintConfigPrettier from "eslint-config-prettier";
 import turboPlugin from "eslint-plugin-turbo";
-import tseslint from "typescript-eslint";
 import onlyWarn from "eslint-plugin-only-warn";
 
 /**
@@ -10,9 +9,11 @@ import onlyWarn from "eslint-plugin-only-warn";
  * @type {import("eslint").Linter.Config[]}
  * */
 export const config = [
-  js.configs.recommended,
+  antfu({
+    typescript: true,
+    stylistic: true,
+  }),
   eslintConfigPrettier,
-  ...tseslint.configs.recommended,
   {
     plugins: {
       turbo: turboPlugin,
@@ -27,6 +28,6 @@ export const config = [
     },
   },
   {
-    ignores: ["dist/**"],
+    ignores: ["dist/**", "node_modules/**"],
   },
 ];

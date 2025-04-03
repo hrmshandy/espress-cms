@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Coffee cup -->
+  <path d="M140,80 H60 V140 C60,160 80,180 100,180 C120,180 140,160 140,140 V80 Z" fill="#6b4226" />
+  
+  <!-- Cup handle -->
+  <path d="M140,100 Q170,100 170,120 Q170,140 140,140" stroke="#6b4226" stroke-width="10" fill="none" />
+  
+  <!-- Steam -->
+  <path d="M80,60 Q90,40 100,60 Q110,40 120,60" stroke="#8b8b8b" stroke-width="4" fill="none" />
+  
+  <!-- Coffee surface -->
+  <ellipse cx="100" cy="80" rx="40" ry="10" fill="#3a2314" />
+  
+  <!-- Text -->
+  <text x="100" y="130" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Espress</text>
+  <text x="100" y="155" font-family="Arial" font-size="18" text-anchor="middle" fill="white">CMS</text>
+</svg>
